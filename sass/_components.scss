@@ -1,0 +1,587 @@
+///LOGO
+.logo {
+    height: 2rem;
+    margin-left: 20px;
+}
+
+///SEARCHBOX
+.search{
+    flex: 0 0 40%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media  (max-width: $bp-smallest){
+        order: 1;
+        flex-basis: 100%;
+    }
+
+    &__input {
+        //gli input non ereditano il font quindi devi specificarlo
+        font-family: inherit;
+        font-size: inherit;
+        background-color: var(--color-grey-light-2);
+        border: none;
+        color: inherit;
+        padding: .4375rem 1.125rem;
+        border-radius: 6.25rem;
+        width: 90%;
+        transition: all .2s;
+
+        //per mettere la lente dentro l'input
+        margin-right: -2rem;
+
+        &:focus{
+            outline: none;
+            width: 100%;
+            background-color: var(--color-grey-light-3);
+
+            @media  (max-width: $bp-smallest){
+                width: 95%;
+            }
+        }
+        //per cambiare style al placeholder
+        &::-webkit-input-placeholder {
+            font-weight: 100;
+            color: var(--color-grey-light-4);
+        }
+    }
+
+    &__input:focus + &__button {
+        background-color: var(--color-grey-light-3);
+    }
+
+    &__button{
+        border: none;
+        background-color: var(--color-grey-light-2);
+        transition: all .2s;
+
+        &:focus{
+            outline: none;
+        }
+
+        &:active {
+            transform: translateY(2px);
+        }
+    }
+
+    &__icon {
+        height: 1.25rem;
+        width: 1.25rem;
+        fill: var(--color-grey-dark-3);
+    }
+}
+
+///USERNAV
+
+.user-nav {
+    display: flex;
+    align-items: center;
+    //per riempiere tutta la riga in altezza stecci tutto
+    align-self: stretch;
+
+    & > * {
+        padding: 0 1.25rem;
+        cursor: pointer;
+        //per riempiere tutta l'icona in altezza e stecciarla-- in abbinata con align-self: stretch; del genitore
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    & > *:hover {
+        background-color: var(--color-grey-light-2);
+    }
+
+
+    &__icon-box {
+        position: relative;
+    }
+
+    &__icon {
+        height: 1.5625rem;
+        width: 1.5625rem;
+        //fill per definire il colore delle svg
+        fill: var(--color-grey-dark-2);
+    }
+
+    &__notification {
+        font-size: .625rem;
+        height: 1.0625rem;
+        width: 1.0625rem;
+        border-radius: 50%;
+        background-color: var(--color-primary);
+        color: #fff;
+        position: absolute;
+        top: .9375rem;
+        left: 2.1875rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__user-photo{
+        width: 2.3125rem;
+        border-radius: 50%;
+        margin-right: .625rem;
+    }
+}
+
+///SIDE NAVIGATION
+
+.side-nav {
+    font-size: .875rem;
+    list-style: none;
+    margin-top: 2.1875rem;
+
+    @media (max-width: $bp-medium){
+        display: flex;
+        margin: 0;
+    }
+
+    &__item {
+        position: relative;
+
+        //genera spazietto tra le linee a sinistra escludendo l'ultimo figlio
+        &:not(:last-child){
+            margin-bottom: .3125rem;
+
+            @media (max-width: $bp-medium){
+                margin-bottom: 0;
+            }
+        }
+        //perchè occupi l'intera riga
+        @media (max-width: $bp-medium){
+            flex-grow: 1;
+        }
+    }
+
+    //per generare la linea a sinistra
+    &__item::before {
+        //content: ''; perchè altrimenti non ti mostrerebbe nulla
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 3px;
+        background-color: var(--color-primary);
+        transform: scaleY(0);
+        transition: transform .2s, 
+                    width .4s .2s cubic-bezier(1, 0, 0, 1),
+                    background-color .1s;
+        
+        // // per far scalare la line dal basso
+        // transform-origin: bottom;
+    }
+    //quando sei in hover allora il ::before
+    &__item:hover::before,
+    &__item--active::before{
+        //per farlo scalare solo nell'asse Y
+        transform: scaleY(1);
+        width: 100%;
+    }
+
+    &__item:active::before{
+        background-color: var(--color-primary-light);
+    }
+
+    &__link:link,
+    &__link:visited{
+        color: var(--color-grey-light-1);
+        text-decoration: none;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: .9375rem 1.875rem;
+        //per allineare in verticale icone e scritta
+        display: flex;
+        align-items: center;
+
+        position: relative;
+        z-index: 1;
+
+        @media (max-width: $bp-medium){
+            justify-content: center;
+            padding: 1.25rem;
+        }
+
+        @media (max-width: $bp-small){
+            flex-direction: column;
+            padding: .9375rem .3125rem;
+        }
+    }
+
+    &__icon {
+        width: 1.0625rem;
+        height: 1.0625rem;
+        margin-right: 1.25rem;
+        //colore corrente oppure del genitore
+        fill: currentColor;
+
+        @media (max-width: $bp-small){
+            margin-right: 0;
+            margin-bottom: .4375rem;
+            width: .9375rem;
+            height: .9375rem;
+        }
+    }
+}
+
+
+///LEGAL TEXT
+
+.legal {
+    font-size: .75rem;
+    text-align: center;
+    padding: 1.5625rem;
+    color: var(--color-grey-light-4);
+
+    @media (max-width: $bp-medium){
+        display: none;
+    }
+}
+
+///GALLERY
+
+.gallery{
+    display: flex;
+    &__photo{
+        width: 100%;
+        display: block;
+    }
+}
+
+///OVERVIEW
+
+.overview{
+
+    display: flex;
+    align-items: center;
+    border-bottom: var(--line);
+
+    &__heading{
+        font-size: 1.5625rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: .9375rem 1.875rem;
+
+        @media (max-width: $bp-small){
+            font-size: 1.125rem;
+            padding: .75rem 1.25rem;
+        }
+    }
+
+    &__stars{
+        //si prende il tutto lo spazio necessario mantenendo lo spazio del contenuto. Molto utile in caso di background differenti
+        margin-right: auto;
+        //per togliere lo spazio tra di loro metti in flex
+        display: flex;
+    }
+
+    &__icon-star,
+    &__icon-location{
+        width: 1.0625rem;
+        height: 1.0625rem;
+        fill: var(--color-primary);
+    }
+
+    &__location{
+        font-size: .75rem;
+        display: flex;
+        align-items: center;
+    }
+
+    &__icon-location{
+        margin-right: .3125rem;
+    }
+
+    &__rating{
+        background-color: var(--color-primary);
+        color: #fff;
+        margin-left: 1.875rem;
+        align-self: stretch;
+        padding: 0 1.375rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        @media (max-width: $bp-small){
+            padding: 0 .9375rem;
+        }
+    }
+
+    &__rating-average{
+        font-size: 1.5625rem;
+        font-weight: 300;
+        margin-bottom: -3px;
+
+        @media (max-width: $bp-small){
+            font-size: 1.125rem;
+        }
+    }
+
+    &__rating-count{
+        font-size: .5rem;
+        text-transform: uppercase;
+
+        @media (max-width: $bp-small){
+            font-size: .3125rem;
+        }
+    }
+}
+
+///BUTTON
+
+.btn-inline{
+    border: none;
+    color: var(--color-primary);
+    font-size: inherit;
+    border-bottom: 1px solid currentColor;
+    padding: 2px;
+    display: inline-block;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all .2s;
+    width: 7.375rem;
+    margin: 0 auto;
+
+    & span {
+        margin-left: 3px;
+        transition: margin-left .2s;
+    }
+
+    &:hover{
+        color: var(--color-grey-dark-1);
+
+        span {
+            margin-left: 8px;
+        }
+    }
+
+    &:focus{
+        outline: none;
+        animation: pulsate 1s;
+        animation-iteration-count: 3;
+    }
+}
+
+@keyframes pulsate {
+    0%{
+        transform: scale(1);
+        box-shadow: none;
+    }
+
+    50%{
+        transform: scale(1.05);
+        box-shadow: 0 .625rem 2.5rem rgba(0,0,0,.25);
+    }
+
+    100%{
+        transform: scale(1);
+        box-shadow: none;
+    }
+}
+
+///PARAGRAPH
+.paragraph:not(:last-of-type){
+    margin-bottom: 1.25rem;
+}
+
+///LIST
+.list{
+    margin: 1.875rem 0;
+    list-style: none;
+    padding: 1.875rem 0;
+    border-top: var(--line);
+    border-bottom: var(--line);
+    display: flex;
+    flex-wrap: wrap;
+
+    &__item{
+        flex: 0 0 50%;
+        margin-bottom: .4375rem;
+    }
+
+    &__item::before{
+        content: '';
+        display: inline-block;
+        height: .625rem;
+        width: .625rem;
+        margin-right: .4375rem;
+        //Modalità più moderna
+        background-color: var(--color-primary);
+        -webkit-mask-image: url('../img/chevron-thin-right.svg');
+        -webkit-mask-size:cover;
+
+        //Vecchia modalità per includerle
+        // background-image: url('../img/chevron-thin-right.svg');
+        // background-size: cover;
+    }
+}
+
+
+///RECOMMEND
+.recommend{
+    font-size: .8125rem;
+    color: var(--color-grey-dark-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__friends {
+        display: flex;
+    }
+
+    &__photo{
+        //box-sizing: content-box; perchè non vuoi che l'immagine diminuisca di grandezza ma che il bordo si aggiunga alle sue dimensioni
+        box-sizing: content-box;
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 50%;
+        border: 3px solid #fff;
+
+        &:not(:last-child){
+            margin-right: -0.9375rem;
+        }
+    }
+}
+
+///REVIEWS
+
+.review{
+    background-color: #fff;
+    box-shadow: var(--shadow-light);
+    padding: 1.875rem;
+    margin-bottom: 2.1875rem;
+    position: relative;
+    overflow: hidden;
+
+    @media (max-width: $bp-medium){
+        padding: 1.25rem;
+        margin-bottom: 1.5625rem;
+    }
+
+    &__text{
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    &__user{
+        display: flex;
+        align-items: center;
+    }
+
+    &__photo{
+        width: 2.8125rem;
+        height: 2.8125rem;
+        border-radius: 50%;
+        margin-right: .9375rem;
+    }
+
+    &__user-box{
+        margin-right: auto;
+    }
+
+    &__user-name{
+        font-size: .6875rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    &__user-date{
+        font-size: .625rem;
+        color: var(--color-grey-dark-3);
+    }
+
+    &__rating{
+        color: var(--color-primary);
+        font-size: 1.375rem;
+        font-weight: 300;
+    }
+
+    &::before{
+        content: "\201C";
+        position: absolute;
+        top: -1.5625rem;
+        left: -0.3125rem;
+        font-family: sans-serif;
+        font-size: 12.5rem;
+        line-height: 1;
+        color: var(--color-grey-light-2);
+    }
+}
+
+///CTA
+.cta{
+    padding: 2.1875rem 0;
+    text-align: center;
+
+    @media (max-width: $bp-medium){
+        padding: 1.5625rem 0;
+    }
+
+    &__book-now{
+        font-size: 1.25rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        margin-bottom: 1.5625rem;
+    }
+}
+
+///CALL TO ACTION
+
+.btn{
+    font-size: .9375rem;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 100px;
+    background-image: linear-gradient(to right,
+                        var(--color-primary-light),
+                        var(--color-primary-dark));
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &__visible{
+        display: inline-block;
+        padding: 1.25rem 4.6875rem;
+    }
+
+    & > * {
+        height: 100%;
+        width: 100%;
+        transition: all .2s;
+    }
+
+    &__invisible{
+        display: inline-block;
+        padding: 1.25rem 0;
+        //lo metto fuori dal bottone così si vede solo il visible
+        position: absolute;
+        left: 0;
+        top: -100%;
+    }
+
+    &:hover {
+        background-image: linear-gradient(to left,
+                        var(--color-primary-light),
+                        var(--color-primary-dark));
+    }
+
+    &:hover &__visible{
+        transform: translateY(100%);
+    }
+
+    &:hover &__invisible{
+        top: 0;
+    }
+
+    &:focus{
+        outline: none;
+        animation: pulsate 1s 3;
+    }
+}
